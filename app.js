@@ -4,9 +4,8 @@ const
   app = express()
 
 app.use(function (req, res, next) {
-  console.log(req.url, 'url')
-  console.log(req.body, 'body')
-  // needs more work on logging
+  // logging
+  console.log(`${req.method} ${req.url} ${res.statusCode}`)
   next()
 })
 
