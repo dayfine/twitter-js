@@ -1,6 +1,7 @@
-const express = require('express')
-const nunjucks = require('nunjucks')
-const app = express()
+const
+  express = require('express'),
+  nunjucks = require('nunjucks'),
+  app = express()
 
 app.use(function (req, res, next) {
   console.log(req.url, 'url')
@@ -19,9 +20,7 @@ var locals = {
 }
 
 app.get('/', function (req, res, next) {
-  res.render('index', locals, function (err, output) {
-    console.log(output)
-  })
+  res.render('index', locals)
   next()
 })
 
