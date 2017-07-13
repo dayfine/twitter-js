@@ -15,8 +15,12 @@
 
       <!-- display tweets here -->
       {% for tweet in tweets %}
-        <li >{{tweet.name}}</li>
-        <li>{{tweet.content}}</li>
+      <div class='container content'>
+        <img></img>
+        <!-- add an ahref for users/ later -->
+        <a href='/users/{{tweet.name}}' class='by'>{{tweet.name}}</a>
+        <div>{{tweet.content}}</div>
+      </div>
       {% endfor %}
 
     </div>
