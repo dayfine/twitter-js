@@ -1,13 +1,18 @@
 const
   express = require('express'),
   nunjucks = require('nunjucks'),
-  app = express()
+  app = express(),
+  routes = require('./routes');
+
+app.use(express.static('public'));
 
 app.use(function (req, res, next) {
   // logging
   console.log(`${req.method} ${req.url} ${res.statusCode}`)
   next()
 })
+
+app.use('/', routes);
 
 app.set('view engine', 'html')
 app.engine('html', nunjucks.render)
@@ -18,10 +23,10 @@ var locals = {
   people: [ { name: 'Gandalf'}, { name: 'Frodo' }, { name: 'Hermione'} ]
 }
 
-app.get('/', function (req, res, next) {
-  res.render('index', locals)
-  next()
-})
+// app.get('/', function (req, res, next) {
+//   res.render('index', locals)
+//   next()
+// })
 
 app.listen(3000, function () {
   console.log('server listening')
