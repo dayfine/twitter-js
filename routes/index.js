@@ -1,11 +1,16 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express'),
+      router = express.Router(),
 // could use one line instead: const router = require('express').Router();
-const tweetBank = require('../tweetBank')
+      tweetBank = require('../tweetBank'),
+      bodyParser = require('body-parser');
+
+
+router.use(bodyParser.urlencoded({ extended: false}));
+
 
 router.get('/', function (req, res) {
   let tweets = tweetBank.list()
-  res.render('index', { tweets: tweets })
+  res.render('index', { tweets: tweets, showForm: true })
 })
 
 router.get('/stylesheets/style.css', function (req, res) {
@@ -24,7 +29,7 @@ router.get('/users/:name', function (req, res) {
   // make sure to match cases
   var name = req.params.name
   var tweets = tweetBank.find({name: name})
-  res.render('index', { tweets: tweets })
+  res.render('index', { tweets: tweets, name: name, showForm: true })
 })
 
 router.get('/tweets/:id', function (req, res) {
@@ -32,5 +37,14 @@ router.get('/tweets/:id', function (req, res) {
   var tweets = tweetBank.find({id: id})
   res.render('index', { tweets: tweets })
 })
+
+router.post('/tweets', function(req, res) {
+  console.log(req.body);
+  var name = req.body.name;
+  var text = req.body.text;
+  tweetBank.add(name, text);
+  res.redirect('/');
+});
+
 
 module.exports = router

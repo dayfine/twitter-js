@@ -2,7 +2,8 @@ const
   express = require('express'),
   nunjucks = require('nunjucks'),
   app = express(),
-  routes = require('./routes');
+  routes = require('./routes'),
+  bodyParser = require('body-parser');
 
 app.use(express.static('public'));
 
@@ -13,6 +14,8 @@ app.use(function (req, res, next) {
 })
 
 app.use('/', routes);
+
+app.use(bodyParser.urlencoded({ extended: false}));
 
 app.set('view engine', 'html')
 app.engine('html', nunjucks.render)
