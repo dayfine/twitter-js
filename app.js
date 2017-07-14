@@ -2,10 +2,13 @@ const
   express = require('express'),
   nunjucks = require('nunjucks'),
   app = express(),
+  server = app.listen(3000),
+  socketio = require('socket.io'),
+  io = socketio.listen(server),
   routes = require('./routes'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser')
 
-app.use(express.static('public'));
+app.use(express.static('public'))
 
 app.use(function (req, res, next) {
   // logging
@@ -13,9 +16,9 @@ app.use(function (req, res, next) {
   next()
 })
 
-app.use('/', routes);
+app.use('/', routes(io))
 
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({ extended: false}))
 
 app.set('view engine', 'html')
 app.engine('html', nunjucks.render)
@@ -31,6 +34,6 @@ var locals = {
 //   next()
 // })
 
-app.listen(3000, function () {
-  console.log('server listening')
-})
+// app.listen(3000, function () {
+//   console.log('server listening')
+// })
